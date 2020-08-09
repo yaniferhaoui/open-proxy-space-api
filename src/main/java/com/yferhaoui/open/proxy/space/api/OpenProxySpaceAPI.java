@@ -7,6 +7,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpClient.Redirect;
 import java.net.http.HttpClient.Version;
 import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.time.Duration;
 import java.util.Arrays;
@@ -37,10 +38,13 @@ public final class OpenProxySpaceAPI {
 				.build();
 
 		// Get Response
-		final String response = this.client.send(httpRequest, BodyHandlers.ofString()).body();
+		final HttpResponse<String> response = this.client.send(httpRequest, BodyHandlers.ofString());
+		if (response.statusCode() != 200) {
+			throw new IOException("HTTP Status Code: " + response.statusCode() + " => " + response.body());
+		}
 
 		// Return Servers
-		return Arrays.asList(this.gson.fromJson(response, Proxy[].class));
+		return Arrays.asList(this.gson.fromJson(response.body(), Proxy[].class));
 	}
 
 	public final List<Proxy> getRandomizedProxies(final Request request) throws IOException, InterruptedException {

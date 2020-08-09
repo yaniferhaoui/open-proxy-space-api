@@ -62,6 +62,13 @@ public final class Proxy implements Serializable, Comparable<Proxy> {
 
 	@Expose(serialize = true, deserialize = true)
 	private long updated;
+	
+	// Basic Constructor
+	public Proxy(final String ip, final int port) {
+		
+		this.ip = ip;
+		this.port = port;
+	}
 
 	// Getter
 	public final boolean contains(final Protocol protocol) {
