@@ -64,10 +64,11 @@ public final class Proxy implements Serializable, Comparable<Proxy> {
 	private long updated;
 	
 	// Basic Constructor
-	public Proxy(final String ip, final int port) {
+	public Proxy(final String ip, final int port, final String country) {
 		
 		this.ip = ip;
 		this.port = port;
+		this.country = country;
 	}
 
 	// Getter
